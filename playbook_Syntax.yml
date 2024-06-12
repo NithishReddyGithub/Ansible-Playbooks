@@ -1,0 +1,9 @@
+---
+- name: Example Playbook
+  hosts: target_hosts
+  remote_user: root
+  tasks:
+    - name: Ensure the package is installed
+      ansible.builtin.yum:
+        name: package_name
+        state: present
