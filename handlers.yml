@@ -1,0 +1,37 @@
+---
+- name: Install Apache on RHEL server
+  hosts: webserver
+  tasks:
+    - name: Install the latest version of Apache
+      dnf:
+        name: httpd
+        state: latest
+
+    - name: Configure Apache 
+      copy:
+        src: /home/cherry/Documents/index.html
+        dest: /var/www/html
+        owner: apache
+        group: apache        
+        mode: 0644
+
+      notify:
+      - Configure Firewall
+      - Start Apache   
+
+//Handlers are tasks that only run when notified by another task.
+//They are usually used to start, restart, reload and stop services on target nodes,
+
+  handlers:
+
+     - name: Start Apache
+       service:
+         name: httpd
+         state: started
+
+     - name: Configure Firewall
+       firewalld:
+         permanent: yes
+         immediate: yes
+         service: http
+         state: enabled
