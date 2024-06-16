@@ -1,0 +1,12 @@
+---
+- name: Install nginx in an aws ec2 instance
+  hosts: practice
+  tasks:
+   - name: install nginx
+     yum: 
+      name: nginx
+      state: present
+   - name: start nginx
+     service:
+      name: nginx
+      state: restart
